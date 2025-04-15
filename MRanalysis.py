@@ -251,29 +251,4 @@ def MR_analysis(exposure_IVs, updated_exposures, outcome_gwas, delimiter, rsid_o
 
     return MR_results, MR_data_total, pleiotropy_tests, het_tests, p_all, psingle_all
 
-
-def save_plots(plots_list, sig_var_dir, file_pattern='*.csv'):
-
-    """
-    Save plots from MR analyses
-
-    Args:
-        plots_list: Either one of the plot lists returned from MR_analysis function
-
-        sig_var_dir (str): Directory containing csv files of significant variants
-                           for each exposure (for file-naming purposes)
-    
-        file_pattern (str): Exposure dataframe file pattern
-
-    Output:
-        png files for each exposure
-    """
-    sig_var_files = sorted(glob.glob(sig_var_dir + '/' + file_pattern))
-    
-    for i in range(len(sig_var_files)):
-        exp_name = os.path.splitext(os.path.basename(sig_var_files[i]))[0]
-        grdevices.png(file=f"{exp_name}.png", width = 1000, height = 850)
-        rprint(plots_list[i])
-        grdevices.dev_off()
-
         
