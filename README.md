@@ -88,10 +88,6 @@ mrresults, mrdat, pleiotropy, heterogeneity, plots, plots_singleSNP = MRanalysis
 
 ### User's code here to manipulate previous output, select results for exposures with significant MR estimates, etc. ###
 
-
-### Save MR scatter plots. Output directory used for file-naming purposes ###
-
-MRanalysis.save_plots(plots, '/path/to/output_directory')
 ```
 
 ## References
