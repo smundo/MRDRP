@@ -39,10 +39,8 @@ At the moment, usage of MRdata.py requires that the user have their exposure sum
         * 4 lists of pandas dataframes for each exposure containing: MR results, harmonized data, pleiotropy tests, heterogeneity tests
         * 2 lists of plots (R objects): MR scatter plots, single-SNP plots
 
-        * Also outputs these products (dataframes + plots) to desired directories
+        * Also outputs these products (dataframes + plots) to desired destination directories
 
-* `save_plots()` :
-    * Saves plots from MR analyses as png files
 
 ## Basic requirements
 
