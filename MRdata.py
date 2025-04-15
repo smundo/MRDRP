@@ -17,7 +17,7 @@ def Fstat(rsquared, n):
     return rsquared*(n - 2)/(1 - rsquared)
 
 
-def get_data(GWAS_dir, sep):
+def get_data(GWAS_dir, sep, sorting_key=None):
 
     """
     Collect full GWAS summary statistics for exposures of interest.
@@ -28,12 +28,15 @@ def get_data(GWAS_dir, sep):
     
         sep (str): Delimiter used in individual GWAS files.
 
+        sorting_key (function): Optional function to extract a desired comparison
+                                key for sorting of exposure names/subdirectories
+
     Returns:
         List of dataframes for each exposure with full GWAS statistics.
     """
 
     
-    exposure_list = sorted(glob.glob(os.path.join(GWAS_dir, '*')))
+    exposure_list = sorted(glob.glob(os.path.join(GWAS_dir, '*')), key = sorting_key)
     
     exposure_chrom = []
 
@@ -50,37 +53,7 @@ def get_data(GWAS_dir, sep):
     return full_gwas
 
 
-def map_rsID(gwas_list):
-
-    """
-    Use Olink mapping files to map rsIDs to SNPs
-
-    Args:
-        gwas_list: List of dataframes with summary statistics for each exposure.
-
-    Returns:
-        Updated list of dataframes with summary statistics for each exposure,
-        each now containing a column for the rsIDs.
-    """
-    
-    olink_directory = '/data/feng_lab/sergio/Olink_rsID_maps'
-    olink_file_pattern = '*.tsv'
-    olink_map_files = glob.glob(olink_directory + '/' + olink_file_pattern)
-    
-    olink_rsid_fullgenome_map = pd.concat([pd.read_table(f, delimiter = '\t') for f in olink_map_files], ignore_index = True)
-
-    gwas_full_update = []
-    for i in range(len(gwas_list)):
-        gwas = gwas_list[i]
-        gwas['LOG10P'] = 10**(np.negative(gwas['LOG10P']))
-        gwas.rename(columns={'LOG10P': 'p-value'}, inplace = True)
-        merged_withrsid = pd.merge(olink_rsid_fullgenome_map, gwas, how='inner', on='ID')
-        gwas_full_update.append(merged_withrsid)
-
-    return gwas_full_update
-
-
-def select_sig_variants(GWAS_dir, output_dir, gwas_list, pval, POS, sig_threshold=5e-8, variant_type='cis', CHROM=None, genomic_coordinates=None, window=None):
+def select_sig_variants(GWAS_dir, output_dir, gwas_list, pval, POS, sig_threshold=5e-8, variant_type='cis', CHROM=None, genomic_coordinates=None, window=None, sorting_key=None):
     """
     Select significant variants for exposures of interest.
 
@@ -109,11 +82,14 @@ def select_sig_variants(GWAS_dir, output_dir, gwas_list, pval, POS, sig_threshol
         window: Amount (in bp) beyond genomic coordinates within which to search for
                 cis-variants (e.g. 300000 will look for variants within 300000 bp of gene)
 
+        sorting_key (function): Optional function to extract a desired comparison
+                                key for sorting of exposure names/subdirectories
+
     Output:
         csv files for each exposure containing summary statistics for significant variants.
     """
 
-    exposure_list = sorted(glob.glob(os.path.join(GWAS_dir, '*')))
+    exposure_list = sorted(glob.glob(os.path.join(GWAS_dir, '*')), key = sorting_key)
 
     for i in range(len(gwas_list)):
         if variant_type == 'cis':
