@@ -8,7 +8,7 @@ MRDRP consists of two Python files: MRdata.py and MRanalysis.py. The former hand
 
 At the moment, usage of MRdata.py requires that the user have their exposure summary data organized in the following directory structure:
 
-![image](directoriesMRDRP.png)
+<img width="621" alt="directoriesMRDRP" src="https://github.com/user-attachments/assets/27c18521-096a-4ac7-bdcd-b384ceae4a6e" />
 
 #### Functions:
 * `get_data()` : 
