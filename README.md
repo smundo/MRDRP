@@ -46,6 +46,12 @@ At the moment, usage of MRdata.py requires that the user have their exposure sum
 
 MRDRP requires the latest versions of Python and R. When using a large amount of data, it is recommended to run the pipeline using more advanced computational resources, such as those offered by supercomputing clusters.
 
+Summary statistics files must include the following minimum information for MR analysis[[1]](#1):
+* rsID of each SNP
+* effect size
+* standard error of the effect size
+* effect allele
+
 ## Usage
 
 Below are some basic examples of how to use the pipeline, assuming 4 exposures of interest (documentation on each function can be accessed via e.g. `print(MRdata.function.__doc__)` and `print(MRanalysis.function.__doc__)`).
