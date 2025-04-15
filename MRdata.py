@@ -33,7 +33,7 @@ def get_data(GWAS_dir, sep):
     """
 
     
-    exposure_list = sorted(glob.glob(os.path.join(GWAS_dir, '*')), key = lambda x: x.split('_', 4)[3])
+    exposure_list = sorted(glob.glob(os.path.join(GWAS_dir, '*')))
     
     exposure_chrom = []
 
@@ -113,7 +113,7 @@ def select_sig_variants(GWAS_dir, output_dir, gwas_list, pval, POS, sig_threshol
         csv files for each exposure containing summary statistics for significant variants.
     """
 
-    exposure_list = sorted(glob.glob(os.path.join(GWAS_dir, '*')), key = lambda x: x.split('_', 4)[3])
+    exposure_list = sorted(glob.glob(os.path.join(GWAS_dir, '*')))
 
     for i in range(len(gwas_list)):
         if variant_type == 'cis':
