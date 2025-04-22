@@ -30,7 +30,10 @@ At the moment, usage of MRdata.py requires that the user have their exposure sum
     * Performs LD clumping on the significant variants of each exposure. Option to do local clumping, or perform clumping by connecting to the remote server used by TwoSampleMR. Default is local clumping.
         * Local clumping requires the user to point to a reference genome file
 
-    * returns a list of exposure instrumental variables (IVs) for each exposure, as R dataframes
+    * Returns:
+         * List of exposure instrumental variables (IVs) for each exposure, as R dataframes
+         * List of exposure names for use in the next function (for file-labeling purposes).
+         
 
 * `MR_analysis()` :
     * performs MR analysis on clumped variants
@@ -83,11 +86,11 @@ import MRanalysis
 
 ### Perform LD clumping (uses output directory specified in previous step as input) ###
 
-exposure_variants = MRanalysis.LD_clump(siv_var_dir='/path/to/output_directory', rsid='rsid', beta='BETA', se='SE', effect_allele='ALLELE1', other_allele='ALLELE0', eaf='A1FREQ', pval='p-value', ref_genome_file='/path/to/ref_genomefile', samplesize='N', chrom='CHROM', pos='POS19', local_clump=True)
+exposure_variants, exposure_names = MRanalysis.LD_clump(siv_var_dir='/path/to/output_directory', rsid='rsid', beta='BETA', se='SE', effect_allele='ALLELE1', other_allele='ALLELE0', eaf='A1FREQ', pval='p-value', ref_genome_file='/path/to/ref_genomefile', samplesize='N', chrom='CHROM', pos='POS19', local_clump=True)
 
 ### Perform MR analysis ###
 
-mrresults, mrdat, pleiotropy, heterogeneity, plots, plots_singleSNP = MRanalysis.MR_analysis(exposure_variants, '/path/to/outcome_GWAS', delimiter='\t', rsid_outcome='rsID', beta_outcome='EFFECT_SIZE', se_outcome='SE', effect_allele_outcome='ALT', other_allele_outcome='REF', eaf_outcome='POOLED_ALT_AF', pval_outcome='pvalue', res_out='/MRresults/destination', data_out='/harmonized_data/destination', pleiotropy_out='/pleiotropy_tests/destination', het_out='/heterogeneity_tests/destination', plot_out='/MR_scatterplots/destination', singleSNP_out='/singleSNP_plots/destination')
+mrresults, mrdat, pleiotropy, heterogeneity, plots, plots_singleSNP = MRanalysis.MR_analysis(exposure_variants, exposure_names, '/path/to/outcome_GWAS', delimiter='\t', rsid_outcome='rsID', beta_outcome='EFFECT_SIZE', se_outcome='SE', effect_allele_outcome='ALT', other_allele_outcome='REF', eaf_outcome='POOLED_ALT_AF', pval_outcome='pvalue', res_out='/MRresults/destination', data_out='/harmonized_data/destination', pleiotropy_out='/pleiotropy_tests/destination', het_out='/heterogeneity_tests/destination', plot_out='/MR_scatterplots/destination', singleSNP_out='/singleSNP_plots/destination')
 
 
 ### User's code here to manipulate previous output, select results for exposures with significant MR estimates, etc. ###
