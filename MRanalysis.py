@@ -137,7 +137,7 @@ def LD_clump(sig_var_dir, rsid, beta, se, effect_allele, other_allele, eaf, pval
                 continue
         else:
             try:
-                exp_data = TwoSampleMR.read_exposure_data(filename = i, clump = False, sep = delimiter, snp_col = rsid, beta_col = beta, se_col = se, effect_allele_col = effect_allele, other_allele_col = other_allele, eaf_col = eaf, pval_col = pval, samplesize_col = samplesize, chr_col = chrom, pos_col = pos)
+                exp_data = TwoSampleMR.read_exposure_data(filename = sig_var_files[i], clump = False, sep = delimiter, snp_col = rsid, beta_col = beta, se_col = se, effect_allele_col = effect_allele, other_allele_col = other_allele, eaf_col = eaf, pval_col = pval, samplesize_col = samplesize, chr_col = chrom, pos_col = pos)
                 
                 IVs = TwoSampleMR.clump_data(exp_data, clump_r2 = clump_threshold, pop = population)
                 exposure_IVs.append(IVs)
